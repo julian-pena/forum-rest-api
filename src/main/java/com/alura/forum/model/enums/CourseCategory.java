@@ -1,6 +1,6 @@
-package com.alura.forum.models.courses;
+package com.alura.forum.model.enums;
 
-public enum Category {
+public enum CourseCategory {
     BACK_END_DEVELOPMENT,
     FRONT_END_DEVELOPMENT,
     DATA_SCIENCE,

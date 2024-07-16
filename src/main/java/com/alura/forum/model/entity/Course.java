@@ -1,10 +1,13 @@
-package com.alura.forum.models.courses;
+package com.alura.forum.model.entity;
 
+import com.alura.forum.model.enums.CourseCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "Course")
 @Table(name = "courses")
@@ -22,6 +25,9 @@ public class Course {
     private String courseName;
 
     @Enumerated(EnumType.STRING)
-    private Category category;
+    private CourseCategory courseCategory;
+
+    @ManyToMany(mappedBy = "courses")
+    private Set<User> usersEnrolled = new HashSet<>();
 
 }

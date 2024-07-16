@@ -1,4 +1,4 @@
-package com.alura.forum.models.topics;
+package com.alura.forum.model.enums;
 
 public enum ForumStatus {
     OPEN,
