@@ -1,4 +1,4 @@
-package com.alura.forum.service;
+package com.alura.forum.service.user;
 
 import com.alura.forum.exception.ResourceNotFoundException;
 import com.alura.forum.model.dto.user.UserDetailsDTO;
@@ -8,6 +8,7 @@ import com.alura.forum.model.dto.user.UserUpdateDTO;
 import com.alura.forum.model.entity.User;
 import com.alura.forum.mapper.UserMapper;
 import com.alura.forum.repository.UserRepository;
+import com.alura.forum.validation.UniqueEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +35,6 @@ public class  UserService {
         Page<User> usersPage = userRepository.findAll(pageable);
         List<UserInfoDTO> userInfoDTOS = userMapper.usersToUserInfoListDTO(usersPage.getContent());
         return new PageImpl<>(userInfoDTOS, pageable, usersPage.getTotalElements());
-
     }
 
     public UserDetailsDTO getUserDetails(Long id) throws ResourceNotFoundException {
@@ -51,19 +51,29 @@ public class  UserService {
 
 
     public UserDetailsDTO updateUser(Long id, UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
-        User userToUpdate = findUserById(id);
-        User userUpdated = userMapper.updateUserFromUserDTO(userUpdateDTO, userToUpdate);
-        System.out.println(userMapper.userToUserDetailInfoDTO(userUpdated));
-        userRepository.save(userToUpdate);
+        // Find topic by ID. An exception will throw if ID is not found.
+        User userUpdated = findUserById(id);
+        // Map new properties to entity from DTO and persist
+        userUpdated = userMapper.updateUserFromUserDTO(userUpdateDTO, userUpdated);
+        userRepository.save(userUpdated);
+        // Return DTO with updated properties
         return userMapper.userToUserDetailInfoDTO(userUpdated);
+    }
+
+    public void deleteUser(Long id) throws ResourceNotFoundException {
+        if (!userRepository.existsById(id)) {
+            throw new ResourceNotFoundException("User not found with id: " + id);
+        }
+        userRepository.deleteById(id);
     }
 
     private User findUserById(Long id) throws ResourceNotFoundException {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
-            throw new ResourceNotFoundException("Error finding user id: " + id);
+            throw new ResourceNotFoundException("User not found with id: " + id);
         }
         return optionalUser.get();
     }
+
 }
 

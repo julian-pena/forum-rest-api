@@ -3,8 +3,8 @@ INSERT INTO users (user_name, email, password, registration_date) VALUES ('Alice
 INSERT INTO users (user_name, email, password, registration_date) VALUES ('Bob', 'bob@example.com', 'password456', '2024-02-01');
 
 -- Insert Courses
-INSERT INTO courses (course_name, category) VALUES ('Java Programming', 'PROGRAMMING');
-INSERT INTO courses (course_name, category) VALUES ('Web Development', 'WEB_DEVELOPMENT');
+INSERT INTO courses (course_name, category) VALUES ('Java Programming', 'DATABASES');
+INSERT INTO courses (course_name, category) VALUES ('Web Development', 'BACK_END_DEVELOPMENT');
 
 -- Insert Topics
 INSERT INTO topics (title, message, creation_date, status, author_id, course_id) VALUES ('Introduction to Java', 'Basics of Java programming.', '2024-03-01', 'OPEN', 1, 1);

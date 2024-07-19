@@ -3,7 +3,6 @@ package com.alura.forum.validation;
 import com.alura.forum.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {

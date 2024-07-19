@@ -4,10 +4,7 @@ import com.alura.forum.model.entity.Course;
 import com.alura.forum.model.entity.User;
 import com.alura.forum.model.enums.ForumStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -15,22 +12,24 @@ import java.time.LocalDateTime;
 @Table(name = "topics")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@EqualsAndHashCode(of = "id")
+@Data
 public class Topic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String title;
 
+    @Column(nullable = false)
     private String message;
 
-    @Column(name = "creation_date")
+    @Column(name = "creation_date", nullable = false)
     private LocalDateTime creationDate;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
     private ForumStatus forumStatus;
 
     @ManyToOne

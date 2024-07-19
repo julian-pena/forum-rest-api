@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record UserRegistrationDTO(@NotEmpty(message = "User name can not be null nor empty") String name,
-                                  @Email(message = "Email must be in email format") @NotNull(message = "Email can not be null nor empty")
+                                  @Email(message = "Email must be in email format: example@domain.com") @NotNull(message = "Email can not be null nor empty")
                                   @UniqueEmail String email,
                                   @NotNull(message = "Password can not be null nor empty")
                                   @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",

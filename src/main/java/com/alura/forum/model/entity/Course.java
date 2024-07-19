@@ -22,9 +22,10 @@ public class Course {
     private Long id;
 
     @Column(name = "course_name")
-    private String courseName;
+    private String name;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "category")
     private CourseCategory courseCategory;
 
     @ManyToMany(mappedBy = "courses")
