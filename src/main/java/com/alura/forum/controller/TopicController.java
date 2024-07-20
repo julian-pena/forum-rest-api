@@ -4,6 +4,7 @@ import com.alura.forum.model.dto.topic.TopicInfoDTO;
 import com.alura.forum.model.dto.topic.TopicRegistrationDTO;
 import com.alura.forum.model.dto.topic.TopicUpdateDTO;
 import com.alura.forum.service.topic.TopicService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
 
 @RestController
@@ -41,6 +41,7 @@ public class TopicController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<TopicInfoDTO> addTopic(@Valid @RequestBody TopicRegistrationDTO registrationDTO, UriComponentsBuilder uriComponentsBuilder){
 
         // Save user entity
@@ -54,19 +55,16 @@ public class TopicController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<TopicInfoDTO> updateTopic(@Valid @RequestBody TopicUpdateDTO updateDTO, @PathVariable Long id){
         var topicInfoDTO = topicService.updateTopic(id, updateDTO);
         return ResponseEntity.ok(topicInfoDTO);
     }
 
     @DeleteMapping("{id}")
+    @Transactional
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id){
         topicService.deleteTopic(id);
         return ResponseEntity.noContent().build();
     }
-
-
-
-
-
 }

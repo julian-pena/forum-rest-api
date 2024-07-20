@@ -6,6 +6,7 @@ import com.alura.forum.model.dto.user.UserInfoDTO;
 import com.alura.forum.model.dto.user.UserRegistrationDTO;
 import com.alura.forum.model.dto.user.UserUpdateDTO;
 import com.alura.forum.service.user.UserService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +41,7 @@ public class UserController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<UserDetailsDTO> registerUser(@RequestBody @Valid UserRegistrationDTO userRegistrationDTO,
                                                        UriComponentsBuilder uriComponentsBuilder){
 
@@ -54,12 +56,14 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<UserDetailsDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
         UserDetailsDTO updatedUser = userService.updateUser(id, userUpdateDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("{id}")
+    @Transactional
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws ResourceNotFoundException {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();

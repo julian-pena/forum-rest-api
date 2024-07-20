@@ -35,7 +35,7 @@ public interface TopicMapper {
     @Mapping(target = "author", ignore = true)
     @Mapping(source = "title", target = "title", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "message", target = "message", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "status", target = "forumStatus", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "forumStatus", target = "forumStatus", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Topic updateTopicFromDTO(TopicUpdateDTO topicUpdateDTO,  @MappingTarget Topic topicToUpdate);
 }
 
