@@ -73,27 +73,14 @@ public class TopicService {
     public TopicInfoDTO registerNewTopic(TopicRegistrationDTO registrationDTO){
         validations.forEach(v -> v.valid(registrationDTO));
 
-        User user = userRepository.getReferenceById(registrationDTO.authorId());
-        Course course = courseRepository.getReferenceById(registrationDTO.courseId());
+        User author = userRepository.getReferenceById(Long.parseLong(registrationDTO.authorId()));
+        Course course = courseRepository.getReferenceById(Long.parseLong(registrationDTO.courseId()));
 
-        Topic topic = topicMapper.registerTopicFromDTO(registrationDTO, user, course);
-
-        topic.setCreationDate(LocalDateTime.now());
-        topic.setForumStatus(ForumStatus.OPEN);
+        Topic topic = topicMapper.registerTopicFromDTO(registrationDTO, author, course);
 
         Topic savedTopic = topicRepository.save(topic);
 
         return topicMapper.topicToTopicInfoDTO(savedTopic);
-    }
-
-
-
-    private Topic findTopicById(Long id) throws ResourceNotFoundException {
-        Optional<Topic> optionalTopic = topicRepository.findById(id);
-        if (optionalTopic.isEmpty()) {
-            throw new ResourceNotFoundException("Topic not found with id: " + id);
-        }
-        return optionalTopic.get();
     }
 
     public TopicInfoDTO updateTopic(Long id, TopicUpdateDTO topicUpdateDTO) {
@@ -111,5 +98,13 @@ public class TopicService {
             throw new ResourceNotFoundException("Topic not found with id: " + id);
         }
         topicRepository.deleteById(id);
+    }
+
+    private Topic findTopicById(Long id) {
+        Optional<Topic> optionalTopic = topicRepository.findById(id);
+        if (optionalTopic.isEmpty()) {
+            throw new ResourceNotFoundException("Topic not found with id: " + id);
+        }
+        return optionalTopic.get();
     }
 }

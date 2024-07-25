@@ -14,7 +14,7 @@ public class ValidateIfCourseExists implements  TopicValidations {
 
     @Override
     public void valid(TopicRegistrationDTO registrationDTO) throws ResourceNotFoundException {
-        if(!courseRepository.existsById(registrationDTO.courseId())) {
+        if(!courseRepository.existsById(Long.parseLong(registrationDTO.courseId()))) {
             throw new ResourceNotFoundException("Course id was not found " + registrationDTO.courseId());
         }
     }

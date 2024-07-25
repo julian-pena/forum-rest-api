@@ -16,9 +16,9 @@ public interface UserMapper {
 
     List<UserInfoDTO> usersToUserInfoListDTO(List<User> userList);
 
-    @Mapping(target = "registrationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "courses", ignore = true)
+    @Mapping(target = "registrationDate", expression = "java(java.time.LocalDate.now())")
     User registerUserFromDTO(UserRegistrationDTO userRegistrationDTO);
 
     @Mapping(target = "registrationDate", ignore = true)

@@ -42,14 +42,11 @@ public class TopicController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<TopicInfoDTO> addTopic(@Valid @RequestBody TopicRegistrationDTO registrationDTO, UriComponentsBuilder uriComponentsBuilder){
-
+    public ResponseEntity<TopicInfoDTO> addTopic(@RequestBody @Valid TopicRegistrationDTO registrationDTO, UriComponentsBuilder uriComponentsBuilder){
         // Save user entity
         TopicInfoDTO topicInfoDTO = topicService.registerNewTopic(registrationDTO);
-
         // Build the URI for the newly created resource
         URI url = uriComponentsBuilder.path("/topics/{id}").buildAndExpand(topicInfoDTO.id()).toUri();
-
         // Return the response with the Location header and the created resource's data
         return ResponseEntity.created(url).body(topicInfoDTO);
     }

@@ -8,7 +8,8 @@ public record TopicInfoDTO(Long id,
                            String title,
                            String message,
                            String creationDate,
-                           ForumStatus forumStatus,
+                           String forumStatus,
                            String authorName,
-                           String courseName) {
+                           String courseName,
+                           Long totalResponses) {
 }

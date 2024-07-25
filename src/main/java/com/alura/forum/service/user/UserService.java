@@ -8,13 +8,11 @@ import com.alura.forum.model.dto.user.UserUpdateDTO;
 import com.alura.forum.model.entity.User;
 import com.alura.forum.mapper.UserMapper;
 import com.alura.forum.repository.UserRepository;
-import com.alura.forum.validation.UniqueEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,14 +35,13 @@ public class  UserService {
         return new PageImpl<>(userInfoDTOS, pageable, usersPage.getTotalElements());
     }
 
-    public UserDetailsDTO getUserDetails(Long id) throws ResourceNotFoundException {
+    public UserDetailsDTO getUserDetails(Long id) {
         User user = findUserById(id);
         return userMapper.userToUserDetailInfoDTO(user);
     }
 
     public UserDetailsDTO registerNewUser(UserRegistrationDTO userRegistrationDTO) {
         User userToRegister = userMapper.registerUserFromDTO(userRegistrationDTO);
-        userToRegister.setRegistrationDate(LocalDate.now());
         User userRegistered =  userRepository.save(userToRegister);
         return userMapper.userToUserDetailInfoDTO(userRegistered);
     }
@@ -60,14 +57,14 @@ public class  UserService {
         return userMapper.userToUserDetailInfoDTO(userUpdated);
     }
 
-    public void deleteUser(Long id) throws ResourceNotFoundException {
+    public void deleteUser(Long id) {
         if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
     }
 
-    private User findUserById(Long id) throws ResourceNotFoundException {
+    private User findUserById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isEmpty()) {
             throw new ResourceNotFoundException("User not found with id: " + id);

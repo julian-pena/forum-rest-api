@@ -1,7 +1,9 @@
 package com.alura.forum.config;
 
 import com.alura.forum.exception.ResourceNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.ValidationException;
+import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -49,6 +51,7 @@ public class GlobalExceptionHandler {
         responseBody.put("timeStamp", currentTime());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
+
 
     // Handle exceptions when the argument passed in the controller URL is not valid
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

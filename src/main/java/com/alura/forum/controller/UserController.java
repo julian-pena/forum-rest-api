@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetailsDTO> getUser(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<UserDetailsDTO> getUser(@PathVariable Long id){
         UserDetailsDTO usersInDatabase = userService.getUserDetails(id);
         return ResponseEntity.ok(usersInDatabase);
     }
@@ -57,7 +57,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity<UserDetailsDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO) throws ResourceNotFoundException {
+    public ResponseEntity<UserDetailsDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO){
         UserDetailsDTO updatedUser = userService.updateUser(id, userUpdateDTO);
         return ResponseEntity.ok(updatedUser);
     }

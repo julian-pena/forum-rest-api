@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidateIfUserExists implements TopicValidations{
+public class ValidateIfAuthorExists implements TopicValidations{
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public void valid(TopicRegistrationDTO registrationDTO) throws ResourceNotFoundException {
-        if (!userRepository.existsById(registrationDTO.authorId())) {
+        if (!userRepository.existsById(Long.parseLong(registrationDTO.authorId()))){
             throw new ResourceNotFoundException("User not found with id: " + registrationDTO.authorId());
         }
     }
