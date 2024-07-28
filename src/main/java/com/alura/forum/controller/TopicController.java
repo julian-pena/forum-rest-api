@@ -4,7 +4,9 @@ import com.alura.forum.model.dto.topic.TopicInfoDTO;
 import com.alura.forum.model.dto.topic.TopicRegistrationDTO;
 import com.alura.forum.model.dto.topic.TopicUpdateDTO;
 import com.alura.forum.service.topic.TopicService;
-import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,22 +28,24 @@ public class TopicController {
     }
 
 
+    @Transactional(readOnly = true)
     @GetMapping
     public ResponseEntity<Page<TopicInfoDTO>> getTopics(@RequestParam(required = false) String criteria,
                                                         @RequestParam(required = false) String value,
-                                                        Pageable pageable){
+                                                        @PageableDefault(sort = "creationDate", direction = Sort.Direction.ASC) Pageable pageable){
         Page<TopicInfoDTO> topicsInDatabase = topicService.getAllTopics(pageable, criteria, value);
         return ResponseEntity.ok(topicsInDatabase);
     }
 
+    @Transactional(readOnly = true)
     @GetMapping("/{id}")
     public ResponseEntity<TopicInfoDTO> getTopic(@PathVariable Long id){
         TopicInfoDTO topicInDatabase =  topicService.getSingleTopic(id);
         return ResponseEntity.ok(topicInDatabase);
     }
 
-    @PostMapping
     @Transactional
+    @PostMapping
     public ResponseEntity<TopicInfoDTO> addTopic(@RequestBody @Valid TopicRegistrationDTO registrationDTO, UriComponentsBuilder uriComponentsBuilder){
         // Save user entity
         TopicInfoDTO topicInfoDTO = topicService.registerNewTopic(registrationDTO);
@@ -51,15 +55,15 @@ public class TopicController {
         return ResponseEntity.created(url).body(topicInfoDTO);
     }
 
-    @PutMapping("/{id}")
     @Transactional
+    @PutMapping("/{id}")
     public ResponseEntity<TopicInfoDTO> updateTopic(@Valid @RequestBody TopicUpdateDTO updateDTO, @PathVariable Long id){
         var topicInfoDTO = topicService.updateTopic(id, updateDTO);
         return ResponseEntity.ok(topicInfoDTO);
     }
 
-    @DeleteMapping("{id}")
     @Transactional
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id){
         topicService.deleteTopic(id);
         return ResponseEntity.noContent().build();

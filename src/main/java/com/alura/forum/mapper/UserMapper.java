@@ -2,7 +2,6 @@ package com.alura.forum.mapper;
 
 import com.alura.forum.model.dto.user.UserUpdateDTO;
 import com.alura.forum.model.entity.User;
-import com.alura.forum.model.dto.user.UserDetailsDTO;
 import com.alura.forum.model.dto.user.UserInfoDTO;
 import com.alura.forum.model.dto.user.UserRegistrationDTO;
 import org.mapstruct.*;
@@ -12,7 +11,8 @@ import java.util.List;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface UserMapper {
 
-    UserDetailsDTO userToUserDetailInfoDTO(User userEntity);
+    @Mapping(source = "registrationDate", target = "registrationDate", dateFormat = "yyyy-MM-dd")
+    UserInfoDTO userToUserInfoDTO(User userEntity);
 
     List<UserInfoDTO> usersToUserInfoListDTO(List<User> userList);
 
