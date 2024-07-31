@@ -6,8 +6,14 @@
 [![Issues][issues-shield]][issues-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
+<br />
+<div align="center">
+  <a href="https://github.com/github_username/repo_name">
+    <img src="D:/Downloads_PDF's/Badge-Spring.png" alt="Logo" width="80" height="80">
+  </a>
 <h1 align="center">Forum REST API</h1>
 <p align="center">
+
   <strong>Spring Boot, Spring Security, Spring Data, PostgreSQL, JPA, MapStruct, Rest API</strong>
   <br />
   <a href="https://github.com/julian-pena/forum-rest-api"><strong>Explore the docs »</strong></a>
@@ -17,6 +23,7 @@
   ·
   <a href="https://github.com/julian-pena/forum-rest-api/issues">Request Feature</a>
 </p>
+</div>
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -59,6 +66,7 @@ Restful CRUD API for a forum with topics and responses, allowing users to intera
 * [![Hibernate][Hibernate.java]][Hibernate-url]
 * [![MapStruct][MapStruct.com]][MapStruct-url]
 * [![Maven][Maven.com]][Maven-url]
+* [![Flyway][Flyway.com]][Flyway-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -257,7 +265,7 @@ Project Link: [https://github.com/julian-pena/forum-rest-api](https://github.com
 [issues-url]: https://github.com/julian-pena/forum-rest-api/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/julian-peña-java
-[SpringBoot.java]: https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring&logoColor=white
+[SpringBoot.java]: https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff&style=flat
 [SpringBoot-url]: https://spring.io/projects/spring-boot
 [SpringSecurity.java]: https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white
 [SpringSecurity-url]: https://spring.io/projects/spring-security
@@ -271,3 +279,5 @@ Project Link: [https://github.com/julian-pena/forum-rest-api](https://github.com
 [MapStruct-url]: https://mapstruct.org/
 [Maven.com]: https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white
 [Maven-url]: https://maven.apache.org/
+[Flyway.com]: https://img.shields.io/badge/Flyway-CC0200?logo=flyway&logoColor=fff&style=for-the-badge
+[Flyway-url]: https://www.red-gate.com/products/flyway/
