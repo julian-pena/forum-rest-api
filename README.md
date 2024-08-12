@@ -9,7 +9,8 @@
 <br />
 <div align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="D:/Downloads_PDF's/Badge-Spring.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/user-attachments/assets/03a49e32-5415-4c5b-ba00-5444315840de" alt="Logo" width="150" height="150"
+
   </a>
 <h1 align="center">Forum REST API</h1>
 <p align="center">
