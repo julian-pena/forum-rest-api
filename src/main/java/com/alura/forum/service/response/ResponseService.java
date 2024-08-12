@@ -7,7 +7,7 @@ import com.alura.forum.model.dto.response.ResponseRegistrationDTO;
 import com.alura.forum.model.dto.response.ResponseUpdateDTO;
 import com.alura.forum.model.entity.Response;
 import com.alura.forum.model.entity.Topic;
-import com.alura.forum.model.entity.User;
+import com.alura.forum.model.entity.UserEntity;
 import com.alura.forum.repository.ResponseRepository;
 import com.alura.forum.repository.TopicRepository;
 import com.alura.forum.repository.UserRepository;
@@ -67,7 +67,7 @@ public class ResponseService {
         validations.forEach(v -> v.valid(registrationDTO));
 
         Topic topic = topicRepository.getReferenceById(Long.parseLong(registrationDTO.topicId()));
-        User responder = userRepository.getReferenceById(Long.parseLong(registrationDTO.responderId()));
+        UserEntity responder = userRepository.getReferenceById(Long.parseLong(registrationDTO.responderId()));
 
         Response response = responseMapper.registerResponseFromDTO(registrationDTO, topic, responder);
 

@@ -7,7 +7,7 @@ import com.alura.forum.model.dto.topic.TopicRegistrationDTO;
 import com.alura.forum.model.dto.topic.TopicUpdateDTO;
 import com.alura.forum.model.entity.Course;
 import com.alura.forum.model.entity.Topic;
-import com.alura.forum.model.entity.User;
+import com.alura.forum.model.entity.UserEntity;
 import com.alura.forum.repository.CourseRepository;
 import com.alura.forum.repository.TopicRepository;
 import com.alura.forum.repository.UserRepository;
@@ -67,7 +67,7 @@ public class TopicService {
     public TopicInfoDTO registerNewTopic(TopicRegistrationDTO registrationDTO){
         validations.forEach(v -> v.valid(registrationDTO));
 
-        User author = userRepository.getReferenceById(Long.parseLong(registrationDTO.authorId()));
+        UserEntity author = userRepository.getReferenceById(Long.parseLong(registrationDTO.authorId()));
         Course course = courseRepository.getReferenceById(Long.parseLong(registrationDTO.courseId()));
 
         Topic topic = topicMapper.registerTopicFromDTO(registrationDTO, author, course);

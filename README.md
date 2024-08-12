@@ -130,10 +130,10 @@ The app defines following CRUD APIs.
 | Method | Url         | Description                                 | Sample Valid Request Body |
 |--------|-------------|---------------------------------------------|---------------------------|
 | GET    | /users      | Get all users present in database as a page |                           |
-| GET    | /users/{id} | Get user based on ID                        |                           |
-| POST   | /users      | Create a new user                           | [JSON](#newuser)          |
-| PUT    | /users/{id} | Update user based on ID                     | [JSON](#updateuser)       |
-| DELETE | /users/{id} | Delete user based on ID                     |                           |
+| GET    | /users/{id} | Get userEntity based on ID                        |                           |
+| POST   | /users      | Create a new userEntity                           | [JSON](#newuser)          |
+| PUT    | /users/{id} | Update userEntity based on ID                     | [JSON](#updateuser)       |
+| DELETE | /users/{id} | Delete userEntity based on ID                     |                           |
 
 ### Topics
 
@@ -160,7 +160,7 @@ The app defines following CRUD APIs.
 
 ## Sample Valid JSON Request Bodys
 
-##### <a id="newuser">Create user -> /users</a>
+##### <a id="newuser">Create userEntity -> /users</a>
 ```json
 {
   "name" : "Nimona flowers",

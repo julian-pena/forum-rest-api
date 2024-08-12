@@ -5,7 +5,7 @@ import com.alura.forum.model.dto.response.ResponseRegistrationDTO;
 import com.alura.forum.model.dto.response.ResponseUpdateDTO;
 import com.alura.forum.model.entity.Response;
 import com.alura.forum.model.entity.Topic;
-import com.alura.forum.model.entity.User;
+import com.alura.forum.model.entity.UserEntity;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public interface ResponseMapper {
     @Mapping(target = "message", source = "registrationDTO.message")
     @Mapping(target = "topic", source = "topic")
     @Mapping(target = "responder", source = "responder")
-    Response registerResponseFromDTO(ResponseRegistrationDTO registrationDTO, Topic topic, User responder);
+    Response registerResponseFromDTO(ResponseRegistrationDTO registrationDTO, Topic topic, UserEntity responder);
 
     @Mapping(target = "topic", ignore = true)
     @Mapping(target = "responder", ignore = true)

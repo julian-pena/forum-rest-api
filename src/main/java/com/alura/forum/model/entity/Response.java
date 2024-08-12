@@ -28,7 +28,7 @@ public class Response {
 
     @ManyToOne
     @JoinColumn(name = "responder_id", nullable = false)
-    private User responder;
+    private UserEntity responder;
 
     private Boolean solution;
 

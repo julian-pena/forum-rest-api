@@ -6,7 +6,7 @@ import com.alura.forum.model.dto.topic.TopicUpdateDTO;
 import com.alura.forum.model.entity.Course;
 import com.alura.forum.model.entity.Response;
 import com.alura.forum.model.entity.Topic;
-import com.alura.forum.model.entity.User;
+import com.alura.forum.model.entity.UserEntity;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -26,9 +26,9 @@ public interface TopicMapper {
     @Mapping(target = "responses", ignore = true)
     @Mapping(target = "forumStatus" , expression = "java(ForumStatus.OPEN)")
     @Mapping(target = "creationDate" , expression = "java(java.time.LocalDateTime.now())")
-    @Mapping(target = "author", source = "user")
+    @Mapping(target = "author", source = "userEntity")
     @Mapping(target = "course", source = "course")
-    Topic registerTopicFromDTO(TopicRegistrationDTO registrationDTO, User user, Course course);
+    Topic registerTopicFromDTO(TopicRegistrationDTO registrationDTO, UserEntity userEntity, Course course);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "creationDate", ignore = true)

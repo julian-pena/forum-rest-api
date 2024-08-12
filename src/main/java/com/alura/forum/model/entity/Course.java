@@ -29,6 +29,6 @@ public class Course {
     private CourseCategory courseCategory;
 
     @ManyToMany(mappedBy = "courses")
-    private Set<User> usersEnrolled = new HashSet<>();
+    private Set<UserEntity> usersEnrolled = new HashSet<>();
 
 }

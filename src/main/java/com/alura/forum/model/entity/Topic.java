@@ -1,7 +1,5 @@
 package com.alura.forum.model.entity;
 
-import com.alura.forum.model.entity.Course;
-import com.alura.forum.model.entity.User;
 import com.alura.forum.model.enums.ForumStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -36,7 +34,7 @@ public class Topic {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
-    private User author;
+    private UserEntity author;
 
     @ManyToOne
     @JoinColumn(name = "course_id")

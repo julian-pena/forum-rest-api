@@ -2,7 +2,6 @@ package com.alura.forum.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +37,20 @@ public class User {
     )
     private Set<Course> courses = new HashSet<>();
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<RoleEntity> roles = new HashSet<>();
 
-
+    @Column(name = "account_non_expired")
+    private boolean isAccountNonExpired;
+    @Column(name = "account_non_locked")
+    private boolean isAccountNonLocked;
+    @Column(name = "credentials_non_expired")
+    private boolean isCredentialsNonExpired;
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
 }
