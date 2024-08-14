@@ -62,6 +62,7 @@ Restful CRUD API for a forum with topics and responses, allowing users to intera
 
 * [![SpringBoot][SpringBoot.java]][SpringBoot-url]
 * [![SpringSecurity][SpringSecurity.java]][SpringSecurity-url]
+* [![JsonWebToken][JsonWebToken.java]][JsonWebToken-url]
 * [![Java][Java.java]][Java-url]
 * [![PostgreSQL][PostgreSQL.sql]][PostgreSQL-url]
 * [![Hibernate][Hibernate.java]][Hibernate-url]
@@ -120,46 +121,119 @@ The app will start running at <http://localhost:8080>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Authentication and Authorizationn
+
+This API uses Spring Security and JWT tokens to secure its endpoints. Below are the steps to understand the authentication process:
+
+### User Registration
+
+**Endpoint: POST /users**
+
+- This endpoint is open to the public.
+- A new user, along with their assigned role, can be created by sending a request to this endpoint.
+```json
+{
+    "name": "Paul Hanks" 
+    "email": "newuser@hotmail.com",
+    "password": "securepassword",
+    "role": "USER"
+}
+```
+
+### User Authentication
+
+**Endpoint: POST /auth/login**
+
+- The user sends a JSON request containing their username and password.
+- Upon successful authentication, a JWT token is returned.
+
+```json
+{
+    "username": "newuser",
+    "password": "securepassword"
+}
+```
+
+**Response**
+```json
+{
+    "username": "julianpr88@hotmail.com",
+    "message": "User logged sucessfully",
+    "jwt": "eyJhbGciOiJIU...",
+    "status": true
+}
+```
+
+
+### Accessing Protected Endpoints
+
+To access any other non-public endpoint, the JWT token must be included in the Authorization header of the request as follows:
+
+```makefile
+Authorization: Bearer <your_token_here>
+```
+
+The token is used to validate the user's roles and the authenticity of the token, ensuring secure access to the API's protected resources.
+
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
 The app defines following CRUD APIs.
 
-### users
 
-| Method | Url         | Description                                 | Sample Valid Request Body |
-|--------|-------------|---------------------------------------------|---------------------------|
-| GET    | /users      | Get all users present in database as a page |                           |
-| GET    | /users/{id} | Get userEntity based on ID                        |                           |
-| POST   | /users      | Create a new userEntity                           | [JSON](#newuser)          |
-| PUT    | /users/{id} | Update userEntity based on ID                     | [JSON](#updateuser)       |
-| DELETE | /users/{id} | Delete userEntity based on ID                     |                           |
+### Authentication Endpoints
+
+| Method | Url           | Description                                          | Sample Valid Request Body | Protected | Roles Required |
+|--------|---------------|------------------------------------------------------|---------------------------|-----------|----------------|
+| POST   | /auth/login   | Authenticate user and receive a JWT                  | [JSON](#login)            | No        | None           |
+| POST   | /auth/register| Register a new user and receive confirmation         | [JSON](#register)         | No        | None           |
+
+### User Endpoints
+
+| Method | Url         | Description                                 | Sample Valid Request Body | Protected | Roles Required |
+|--------|-------------|---------------------------------------------|---------------------------|-----------|----------------|
+| GET    | /users      | Get all users present in database as a page |                           | Yes       | ADMIN          |
+| GET    | /users/{id} | Get userEntity based on ID                  |                           | Yes       | ADMIN          |
+| POST   | /users      | Create a new userEntity                     | [JSON](#newuser)          | No        | None           |
+| PUT    | /users/{id} | Update userEntity based on ID               | [JSON](#updateuser)       | Yes       | ADMIN          |
+| DELETE | /users/{id} | Delete userEntity based on ID               |                           | Yes       | ADMIN          |
+
 
 ### Topics
 
-| Method | Url          | Description                                  | Sample Valid Request Body |
-|--------|--------------|----------------------------------------------|---------------------------|
-| GET    | /topics      | Get all topics present in database as a page |                           |
-| GET    | /topics/{id} | Get topic based on ID                        |                           |
-| POST   | /topics      | Create a new topic                           | [JSON](#createtopic)      |
-| PUT    | /topics/{id} | Update topic based on ID                     | [JSON](#updatetopic)      |
-| DELETE | /topics/{id} | Delete topic based on ID                     |                           |
+| Method | Url          | Description                                  | Sample Valid Request Body | Protected? | Roles Required |
+|--------|--------------|----------------------------------------------|---------------------------|------------|----------------|
+| GET    | /topics      | Get all topics present in database as a page |                           | Yes        | ADMIN, USER    |
+| GET    | /topics/{id} | Get topic based on ID                        |                           | Yes        | ADMIN, USER    |
+| POST   | /topics      | Create a new topic                           | [JSON](#createtopic)      | Yes        | ADMIN          |
+| PUT    | /topics/{id} | Update topic based on ID                     | [JSON](#updatetopic)      | Yes        | ADMIN          |
+| DELETE | /topics/{id} | Delete topic based on ID                     |                           | Yes        | ADMIN          |
+
 
 ### Responses
 
-| Method | Url             | Description                                     | Sample Valid Request Body |
-|--------|-----------------|-------------------------------------------------|---------------------------|
-| GET    | /responses      | Get all responses present in database as a page |                           |
-| GET    | /responses/{id} | Get response based on ID                        |                           |
-| POST   | /responses      | Create a new response                           | [JSON](#createresponse)   |
-| PUT    | /responses/{id} | Update response based on ID                     | [JSON](#updateresponse)   |
-| DELETE | /responses/{id} | Delete response based on ID                     |                           |
+| Method | Url             | Description                                     | Sample Valid Request Body | Protected | Roles Required |
+|--------|-----------------|-------------------------------------------------|---------------------------|-----------|----------------|
+| GET    | /responses      | Get all responses present in database as a page |                           | Yes       | USER, ADMIN    |
+| GET    | /responses/{id} | Get response based on ID                        |                           | Yes       | USER, ADMIN    |
+| POST   | /responses      | Create a new response                           | [JSON](#createresponse)   | Yes       | USER, ADMIN    |
+| PUT    | /responses/{id} | Update response based on ID                     | [JSON](#updateresponse)   | Yes       | ADMIN          |
+| DELETE | /responses/{id} | Delete response based on ID                     |                           | Yes       | ADMIN          |
 
 
 ****Test them using postman or any other rest client.****
 
 ## Sample Valid JSON Request Bodys
+
+##### <a id="login">Login -> /auth/login </a>
+```json
+{
+  "username" : "nimona_flowers@gmail.com",
+  "password": "Nimonapassword123*"
+}
+```
 
 ##### <a id="newuser">Create userEntity -> /users</a>
 ```json
@@ -221,8 +295,8 @@ The app defines following CRUD APIs.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add Spring Security
-- [ ] Add JWT
+- [x] Add Spring Security
+- [x] Add JWT
 - [ ] Documentation(Swagger)
 
 See the [open issues](https://github.com/julian-pena/forum-rest-api/issues) for a full list of proposed features (and known issues).
@@ -270,6 +344,8 @@ Project Link: [https://github.com/julian-pena/forum-rest-api](https://github.com
 [SpringBoot-url]: https://spring.io/projects/spring-boot
 [SpringSecurity.java]: https://img.shields.io/badge/Spring%20Security-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white
 [SpringSecurity-url]: https://spring.io/projects/spring-security
+[JsonWebToken.java]: https://img.shields.io/badge/-JSON_Web_Tokens-black?style=for-the-badge&logoColor=white&logo=jsonwebtokens&color=000000
+[JsonWebToken-url]: https://spring.io/projects/spring-security](https://jwt.io/
 [Java.java]: https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white
 [Java-url]: https://www.java.com/es/
 [PostgreSQL.sql]: https://img.shields.io/badge/postgresql-4169e1?style=for-the-badge&logo=postgresql&logoColor=white
