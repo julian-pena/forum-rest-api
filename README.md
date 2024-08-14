@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Restful CRUD API for a forum with topics and responses, allowing users to interact with and manage forum data efficiently. Engineered for scalability and simplicity.
+Robust RESTful API for managing forum topics and responses. Secure and scalable with JWT authentication for seamless user interaction.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,7 +121,7 @@ The app will start running at <http://localhost:8080>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Authentication and Authorizationn
+## Authentication and Authorization
 
 This API uses Spring Security and JWT tokens to secure its endpoints. Below are the steps to understand the authentication process:
 
