@@ -1,6 +1,7 @@
 package com.alura.forum.model.dto.user;
 
 import com.alura.forum.validation.UniqueEmail;
+import com.alura.forum.validation.ValidRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,5 +15,5 @@ public record UserRegistrationDTO(@NotEmpty(message = "User name can not be null
                                               message = "Password must be at least 12 characters long, contain at least one uppercase letter, " +
                                                       "one lowercase letter, one special character, and one number")
                                   String password,
-                                  String role) {
+                                  @NotNull @ValidRole String role) {
 }

@@ -4,13 +4,18 @@ import com.alura.forum.exception.ResourceNotFoundException;
 import com.alura.forum.model.dto.user.UserInfoDTO;
 import com.alura.forum.model.dto.user.UserRegistrationDTO;
 import com.alura.forum.model.dto.user.UserUpdateDTO;
+import com.alura.forum.model.entity.RoleEntity;
 import com.alura.forum.model.entity.UserEntity;
 import com.alura.forum.mapper.UserMapper;
+import com.alura.forum.model.enums.RoleEnum;
+import com.alura.forum.repository.RoleRepository;
 import com.alura.forum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -19,10 +24,13 @@ public class  UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 
+    private final RoleRepository roleRepository;
+
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper){
+    public UserService(UserRepository userRepository, UserMapper userMapper, RoleRepository roleRepository){
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.roleRepository = roleRepository;
     }
     @Transactional(readOnly = true)
     public Page<UserInfoDTO> getAllUsers(Pageable pageable) {
@@ -39,7 +47,11 @@ public class  UserService {
 
     @Transactional
     public UserInfoDTO registerNewUser(UserRegistrationDTO userRegistrationDTO) {
+        RoleEntity roleEntity = roleRepository.findByRole(RoleEnum.valueOf(userRegistrationDTO.role().toUpperCase()))
+                .orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+
         UserEntity userEntityToRegister = userMapper.registerUserFromDTO(userRegistrationDTO);
+        userEntityToRegister.setRoles(Collections.singleton(roleEntity));
         UserEntity userEntityRegistered =  userRepository.save(userEntityToRegister);
         return userMapper.userToUserInfoDTO(userEntityRegistered);
     }
