@@ -1,4 +1,4 @@
-package com.alura.forum.config.security.utils;
+package com.alura.forum.config.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

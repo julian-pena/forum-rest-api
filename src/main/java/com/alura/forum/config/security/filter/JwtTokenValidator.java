@@ -1,6 +1,6 @@
 package com.alura.forum.config.security.filter;
 
-import com.alura.forum.config.security.utils.JwtUtils;
+import com.alura.forum.config.utils.JwtUtils;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

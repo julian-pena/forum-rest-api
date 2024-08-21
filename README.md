@@ -297,7 +297,10 @@ The app defines following CRUD APIs.
 
 - [x] Add Spring Security
 - [x] Add JWT
-- [ ] Documentation(Swagger)
+- [x] Documentation(Swagger)
+- [ ] Unit Testing
+- [ ] Integration Testing
+- [ ] CI/CD and Docker
 
 See the [open issues](https://github.com/julian-pena/forum-rest-api/issues) for a full list of proposed features (and known issues).
 

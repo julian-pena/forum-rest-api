@@ -1,6 +1,6 @@
 package com.alura.forum.config.security;
 
-import com.alura.forum.config.security.utils.JwtUtils;
+import com.alura.forum.config.utils.JwtUtils;
 import com.alura.forum.model.dto.authentication.AuthLoginRequest;
 import com.alura.forum.model.dto.authentication.AuthResponse;
 import com.alura.forum.model.entity.UserEntity;
