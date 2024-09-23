@@ -1,4 +1,4 @@
-package com.alura.forum.config;
+package com.alura.forum.exception;
 
 import com.alura.forum.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
@@ -13,9 +13,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -52,6 +51,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(EnumConstantNotPresentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, Object>> handleEnumConstantNotPresentException(EnumConstantNotPresentException exc){
+        Map<String, Object> responseBody = new HashMap<>();
+        String enumValues = Arrays.stream(exc.enumType().getEnumConstants())
+                .map(Enum::name)
+                .collect(Collectors.joining(", "));
+
+        responseBody.put("message", "Invalid value for constant.");
+        responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("timeStamp", currentTime());
+        responseBody.put("Allowed values", enumValues);
+        responseBody.put("rejected value", exc.constantName());
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
 
     // Handle exceptions when the argument passed in the controller URL is not valid
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

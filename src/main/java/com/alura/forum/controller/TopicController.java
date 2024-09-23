@@ -155,7 +155,7 @@ public class TopicController {
     @GetMapping
     public ResponseEntity<Page<TopicInfoDTO>> getTopics(@RequestParam(required = false) String criteria,
                                                         @RequestParam(required = false) String value,
-                                                        @PageableDefault(sort = "creationDate", direction = Sort.Direction.ASC) Pageable pageable){
+                                                        @PageableDefault(direction = Sort.Direction.ASC, size = 20) Pageable pageable){
         Page<TopicInfoDTO> topicsInDatabase = topicService.getAllTopics(pageable, criteria, value);
         return ResponseEntity.ok(topicsInDatabase);
     }
@@ -513,7 +513,7 @@ public class TopicController {
                     )
             )
     })
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTopic(@PathVariable Long id){
         topicService.deleteTopic(id);
         return ResponseEntity.noContent().build();

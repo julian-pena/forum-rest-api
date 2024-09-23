@@ -6,12 +6,14 @@ import com.alura.forum.model.dto.topic.TopicUpdateDTO;
 import com.alura.forum.model.entity.Course;
 import com.alura.forum.model.entity.Response;
 import com.alura.forum.model.entity.Topic;
+import com.alura.forum.model.enums.ForumStatus;
 import com.alura.forum.model.entity.UserEntity;
 import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING,
+        imports = ForumStatus.class)
 public interface TopicMapper {
 
     @Mapping(target = "authorName", source = "author.name")
@@ -37,13 +39,19 @@ public interface TopicMapper {
     @Mapping(target = "responses", ignore = true)
     @Mapping(source = "title", target = "title", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @Mapping(source = "message", target = "message", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "forumStatus", target = "forumStatus", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "forumStatus", target = "forumStatus", qualifiedByName = "mapForumStatus",
+            nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     Topic updateTopicFromDTO(TopicUpdateDTO topicUpdateDTO,  @MappingTarget Topic topicToUpdate);
 
 
     @Named("mapResponses")
     default Long mapResponsesToLong(List<Response> responses){
         return (long) responses.size();
+    }
+
+    @Named("mapForumStatus")
+    default ForumStatus mapForumStatusStringToEnum(String stringForum){
+        return ForumStatus.valueOf(stringForum.toUpperCase());
     }
 
 }

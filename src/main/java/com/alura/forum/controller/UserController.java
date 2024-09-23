@@ -16,6 +16,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,6 @@ public class UserController {
     }
 
 
-
-    @Transactional(readOnly = true)
-    @GetMapping
     @Operation(summary = "Get all users",
             description = "Returns a pageable list of all users",
             parameters = {
@@ -79,13 +77,16 @@ public class UserController {
                     )
             }
     )
-    public ResponseEntity<Page<UserInfoDTO>> getUsers(@PageableDefault(sort = "registrationDate", direction = Sort.Direction.ASC) Pageable pageable){
+    @Transactional(readOnly = true)
+    @GetMapping
+    @PreAuthorize("hasAuthority('READ_USER')")
+    public ResponseEntity<Page<UserInfoDTO>> getUsers(@PageableDefault(sort = "registrationDate", direction = Sort.Direction.ASC, size = 20) Pageable pageable){
         Page<UserInfoDTO> usersInDatabase = userService.getAllUsers(pageable);
         return ResponseEntity.ok(usersInDatabase);
     }
 
 
-    @Transactional(readOnly = true)
+
     @Operation(summary = "Get user by ID",
             description = "Returns a User by their ID",
             parameters = {
@@ -154,13 +155,14 @@ public class UserController {
                     )
             }
     )
+    @Transactional(readOnly = true)
+    @PreAuthorize("hasAuthority('READ_USER')")
     @GetMapping("/{id}")
     public ResponseEntity<UserInfoDTO> getUser(@PathVariable Long id){
         UserInfoDTO userInfoDTO = userService.getSingleUser(id);
         return ResponseEntity.ok(userInfoDTO);
     }
 
-    @Transactional
     @Operation(
             summary = "Register a new user",
             description = "Creates a new user in the system and returns the details of the newly created user.",
@@ -244,6 +246,7 @@ public class UserController {
                     )
             )
     })
+    @Transactional
     @PostMapping
     public ResponseEntity<UserInfoDTO> registerUser(@RequestBody @Valid UserRegistrationDTO userRegistrationDTO,
                                                        UriComponentsBuilder uriComponentsBuilder){
@@ -258,7 +261,6 @@ public class UserController {
         return ResponseEntity.created(url).body(userInfoDTO);
     }
 
-    @Transactional
     @Operation(
             summary = "Update a user's information",
             description = "Updates the information of an existing user identified by their ID.",
@@ -362,13 +364,14 @@ public class UserController {
                     )
             )
     })
+    @Transactional
+    @PreAuthorize("hasAuthority('UPDATE_USER')")
     @PutMapping("/{id}")
     public ResponseEntity<UserInfoDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO userUpdateDTO){
         UserInfoDTO updatedUser = userService.updateUser(id, userUpdateDTO);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @Transactional
     @Operation(
             summary = "Delete a user",
             description = "Deletes an existing user by their ID.",
@@ -420,6 +423,8 @@ public class UserController {
                     )
             )
     })
+    @Transactional
+    @PreAuthorize("hasAuthority('DELETE_USER')")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) throws ResourceNotFoundException {
         userService.deleteUser(id);

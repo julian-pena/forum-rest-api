@@ -43,7 +43,7 @@ public class UserEntity {
 
     @Schema(description = "Courses that the user is enrolled in.",
             implementation = Course.class)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_courses",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -53,7 +53,7 @@ public class UserEntity {
 
     @Schema(description = "Roles assigned to the user.",
             implementation = RoleEntity.class)
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),

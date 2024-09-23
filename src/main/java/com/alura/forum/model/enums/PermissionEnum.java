@@ -15,5 +15,41 @@ public enum PermissionEnum {
     UPDATE_TOPIC,
 
     @Schema(description = "Permission to delete topics.")
-    DELETE_TOPIC
+    DELETE_TOPIC,
+
+    @Schema(description = "Permission to read user information.")
+    READ_USER,
+
+    @Schema(description = "Permission to create or write new user information.")
+    WRITE_USER,
+
+    @Schema(description = "Permission to update user information.")
+    UPDATE_USER,
+
+    @Schema(description = "Permission to delete users.")
+    DELETE_USER,
+
+    @Schema(description = "Permission to read responses.")
+    READ_RESPONSE,
+
+    @Schema(description = "Permission to write or create new responses.")
+    WRITE_RESPONSE,
+
+    @Schema(description = "Permission to update responses.")
+    UPDATE_RESPONSE,
+
+    @Schema(description = "Permission to delete responses.")
+    DELETE_RESPONSE,
+
+    @Schema(description = "Permission to read courses.")
+    READ_COURSE,
+
+    @Schema(description = "Permission to write or create new courses.")
+    WRITE_COURSE,
+
+    @Schema(description = "Permission to update courses.")
+    UPDATE_COURSE,
+
+    @Schema(description = "Permission to delete courses.")
+    DELETE_COURSE
 }

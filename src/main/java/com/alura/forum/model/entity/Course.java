@@ -3,11 +3,11 @@ package com.alura.forum.model.entity;
 import com.alura.forum.model.enums.CourseCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Schema(description = "Entity representing a course in the forum.")
@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @EqualsAndHashCode(of = "id")
 public class Course {
 
@@ -27,7 +28,7 @@ public class Course {
 
     @Schema(description = "Name of the course.",
             example = "Java for Beginners")
-    @Column(name = "course_name")
+    @Column(name = "course_name", unique = true)
     private String name;
 
     @Schema(description = "Category of the course, represented as an enum value.",
@@ -37,7 +38,7 @@ public class Course {
     private CourseCategory courseCategory;
 
     @Schema(description = "Set of users enrolled in this course.")
-    @ManyToMany(mappedBy = "courses")
-    private Set<UserEntity> usersEnrolled = new HashSet<>();
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER)
+    private List<UserEntity> usersEnrolled = new ArrayList<>();
 
 }

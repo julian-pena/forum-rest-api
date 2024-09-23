@@ -145,7 +145,7 @@ public class ResponseController {
     @GetMapping
     public ResponseEntity<Page<ResponseInfoDTO>> getResponses(@RequestParam(required = false) String criteria,
                                                               @RequestParam(required = false) String value,
-                                                              @PageableDefault(sort = "creationDate", direction = Sort.Direction.ASC) Pageable pageable){
+                                                              @PageableDefault(sort = "creationDate", direction = Sort.Direction.ASC, size = 20) Pageable pageable){
         Page<ResponseInfoDTO> responsesInDatabase = responseService.getResponses(pageable, criteria, value);
         return ResponseEntity.ok(responsesInDatabase);
     }

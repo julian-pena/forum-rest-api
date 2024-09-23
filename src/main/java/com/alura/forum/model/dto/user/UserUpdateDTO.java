@@ -1,6 +1,7 @@
 package com.alura.forum.model.dto.user;
 
 import com.alura.forum.validation.UniqueEmail;
+import com.alura.forum.validation.ValidLongValue;
 import jakarta.validation.constraints.Email;
 
 import jakarta.validation.constraints.Pattern;
@@ -25,5 +26,9 @@ public record UserUpdateDTO(
                 example = "NewP@ssw0rd1234!")
         @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",
                 message = "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one special character, and one number")
-        String password) {
+        String password,
+        @Schema(description = "A new course for the user, which is provided via Course ID.",
+                example = "3")
+        @ValidLongValue
+        String newCourseId) {
 }

@@ -22,14 +22,14 @@ public record UserRegistrationDTO(
                 example = "john.doe@example.com",
                 required = true)
         @Email(message = "Email must be in email format: example@domain.com")
-        @NotNull(message = "Email can not be null nor empty")
+        @NotEmpty(message = "Email can not be null nor empty")
         @UniqueEmail
         String email,
 
         @Schema(description = "The password for the user, which must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one special character, and one number.",
                 example = "P@ssw0rd1234!",
                 required = true)
-        @NotNull(message = "Password can not be null nor empty")
+        @NotEmpty(message = "Password can not be null nor empty")
         @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{12,}$",
                 message = "Password must be at least 12 characters long, contain at least one uppercase letter, one lowercase letter, one special character, and one number")
         String password,
@@ -37,7 +37,7 @@ public record UserRegistrationDTO(
         @Schema(description = "The role assigned to the user, which must be a valid role defined in the system.",
                 example = "USER",
                 required = true)
-        @NotNull
+        @NotEmpty
         @ValidRole
         String role) {
 }

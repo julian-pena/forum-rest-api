@@ -1,6 +1,7 @@
 package com.alura.forum.mapper;
 
 import com.alura.forum.model.dto.user.UserUpdateDTO;
+import com.alura.forum.model.entity.Course;
 import com.alura.forum.model.entity.PermissionEntity;
 import com.alura.forum.model.entity.RoleEntity;
 import com.alura.forum.model.entity.UserEntity;
@@ -29,6 +30,7 @@ public interface UserMapper {
 
 
     @Mapping(source = "registrationDate", target = "registrationDate", dateFormat = "yyyy-MM-dd")
+    @Mapping(source = "courses", target = "courses", qualifiedByName = "mapCourses")
     UserInfoDTO userToUserInfoDTO(UserEntity userEntity);
 
     List<UserInfoDTO> usersToUserInfoListDTO(List<UserEntity> userEntityList);
@@ -51,34 +53,28 @@ public interface UserMapper {
     @Mapping(target = "accountNonExpired", ignore = true)
     @Mapping(target = "registrationDate", ignore = true)
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "courses", ignore = true)
-    @Mapping(source = "name", target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "email", target = "email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(source = "password", target = "password", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, qualifiedByName = "mapPassword")
-    UserEntity updateUserFromUserDTO(UserUpdateDTO userUpdateDTO, @MappingTarget UserEntity userEntityUpdated);
+    @Mapping(source = "course", target = "courses", qualifiedByName = "addNewCourse")
+    @Mapping(source = "userUpdateDTO.name", target = "name", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "userUpdateDTO.email", target = "email", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(source = "userUpdateDTO.password", target = "password", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, qualifiedByName = "mapPassword")
+    UserEntity updateUserFromUserDTO(UserUpdateDTO userUpdateDTO, Course course, @MappingTarget UserEntity userEntityUpdated);
 
 
-    /*
-    @Named("mapNewRole")
-    default Set<RoleEntity> mapNewRole(String stringRole) {
-
-        RoleEnum roleEnum = RoleEnum.valueOf(stringRole.toUpperCase());
-        RoleEntity roleEntity = new RoleEntity(roleEnum);
-
-        roleEntity.setPermissionsList(roleEnum.getPermissionEnums().stream()
-                 .map(PermissionEntity::new)
-                 .collect(Collectors.toSet()));
-
-        return Stream.of(roleEntity).collect(Collectors.toSet());
-    } */
+    @Named("mapCourses")
+    default Set<String> mapCoursesToCoursesNames(Set<Course> courses){
+        return courses.stream()
+                .map(Course::getName)
+                .collect(Collectors.toSet());
+    }
 
     @Named("mapPassword")
     default String mapPassword(String password){
         return passwordEncoder.encode(password);
     }
 
-    private Set<RoleEntity> something(String value){
-        return null;
+    @Named("addNewCourse")
+    default void addCourseToSetOfCoursesFromUser(Course course, @MappingTarget Set<Course> courses){
+        courses.add(course);
     }
 
 
