@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.*;
 
 
-/*@ActiveProfiles("test")
+@ActiveProfiles("test")
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -40,18 +40,17 @@ public class UserServiceTest {
     @Test
     void findUser_ReturnsUserDto() {
         UserEntity mockedUser = new UserEntity();
-        mockedUser.setId(anyLong());
+        mockedUser.setId(1L);  // Usar un valor real
         mockedUser.setName("Yuji Itadori");
         mockedUser.setEmail("yuji_itadori@gmail.com");
         mockedUser.setPassword("5A74008816jj-");
         mockedUser.setRegistrationDate(LocalDate.now());
 
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(mockedUser));
-        when(userMapper.userToUserInfoDTO(mockedUser)).thenReturn(new UserInfoDTO
-                (anyLong(),"Yuji Itadori", "yuji_itadori@gmail.com", LocalDate.now().toString(),
-                        new HashSet<>() ));
+        when(userMapper.userToUserInfoDTO(mockedUser)).thenReturn(new UserInfoDTO(
+                1L, "Yuji Itadori", "yuji_itadori@gmail.com", LocalDate.now().toString(), new HashSet<>()));
 
-        UserInfoDTO returnedDTO = userService.getSingleUser(anyLong());
+        UserInfoDTO returnedDTO = userService.getSingleUser(1L);
 
         assertThat(returnedDTO).isNotNull();
         assertThat(returnedDTO.name()).isEqualTo("Yuji Itadori");
@@ -59,8 +58,5 @@ public class UserServiceTest {
         assertThat(returnedDTO.id()).isEqualTo(1L);
         assertThat(returnedDTO.courses()).isEmpty();
     }
+}
 
-
-
-
-}*/
