@@ -33,6 +33,7 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/topics/**").hasAuthority("READ_SOMETHING");
                     auth.requestMatchers(HttpMethod.GET, "/topics/**").hasRole("READ_SOMETHING");
                     auth.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/", "/error").permitAll();
                     auth.anyRequest().permitAll();
                 })
                 .addFilterBefore(new JwtTokenValidator(jwtUtils), BasicAuthenticationFilter.class)

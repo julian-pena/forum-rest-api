@@ -6,6 +6,8 @@ import jakarta.validation.ValidationException;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,6 +49,26 @@ public class GlobalExceptionHandler {
         Map<String, Object> responseBody = new HashMap<>();
         responseBody.put("message", exc.getMessage());
         responseBody.put("status", HttpStatus.BAD_REQUEST.value());
+        responseBody.put("timeStamp", currentTime());
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Map<String, Object>> handleBadCredentialsException(BadCredentialsException exc) {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("message", exc.getMessage());
+        responseBody.put("status", HttpStatus.UNAUTHORIZED.value());
+        responseBody.put("timeStamp", currentTime());
+        return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<Map<String, Object>> handleBadCredentialsException(UsernameNotFoundException exc) {
+        Map<String, Object> responseBody = new HashMap<>();
+        responseBody.put("message", exc.getMessage());
+        responseBody.put("status", HttpStatus.UNAUTHORIZED.value());
         responseBody.put("timeStamp", currentTime());
         return new ResponseEntity<>(responseBody, HttpStatus.BAD_REQUEST);
     }
