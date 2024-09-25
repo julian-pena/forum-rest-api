@@ -69,13 +69,19 @@ Robust RESTful API for managing forum topics and responses. Secure and scalable 
 * [![MapStruct][MapStruct.com]][MapStruct-url]
 * [![Maven][Maven.com]][Maven-url]
 * [![Flyway][Flyway.com]][Flyway-url]
+* [![Koyeb][Koyeb.com]][Koyeb-url] 
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- GETTING STARTED -->
-## Getting Started
+## Live Application
+Access the live version of the Forum REST API here: [Forum REST API](https://bewildered-layla-myprojects-julianp-98f1aebf.koyeb.app/). <br><br>
+This project is deployed on [Koyeb](https://www.koyeb.com) with PostgreSQL as the database. Environment variables are used to manage sensitive data like database credentials. You can access the live version through the link above.
 
-This guide will help you set up and run the REST API locally on your machine.
+
+<!-- GETTING STARTED -->
+## Local Setup
+Although the app is deployed and accessible online, you can still run it locally by following the steps below:
 
 ### Prerequisites
 
@@ -98,18 +104,41 @@ For Linux:
 **3. PostgreSQL**
 - If you do not already have PostgreSQL installed, you can follow the instructions at [postgresql.org](https://www.postgresql.org/download/).
 
+<br>
 
-### Steps to Setup
+## Steps to Setup
 **1. Clone the repo**
 
    ```bash
    git clone https://github.com/julian-pena/forum-rest-api.git
    ```
 
-**2. Configure PostgreSQL connection as per your installation**
+**2. Set up environment variables for PostgreSQL**
 
-- Open `src/main/resources/application.properties`
-- Update `spring.datasource.username` and `spring.datasource.password` to your PostgreSQL configuration.
+- You will need to set the following environment variables for the database connection:
+  - `SPRING_DATASOURCE_URL`
+  - `SPRING_DATASOURCE_USERNAME`
+  - `SPRING_DATASOURCE_PASSWORD`
+
+On **Windows**, you can set these variables by running the following commands in your terminal:
+
+```bash
+set SPRING_DATASOURCE_URL=jdbc:postgresql://<your_postgres_url>
+set SPRING_DATASOURCE_USERNAME=<your_username>
+set SPRING_DATASOURCE_PASSWORD=<your_password>
+```
+
+On **Linux** or **macOS**, use the following commands:
+
+```bash
+export SPRING_DATASOURCE_URL=jdbc:postgresql://<your_postgres_url>
+export SPRING_DATASOURCE_USERNAME=<your_username>
+export SPRING_DATASOURCE_PASSWORD=<your_password>
+```
+
+#### Make sure to replace <your_postgres_url>, <your_username>, and <your_password> with your actual PostgreSQL credentials.
+
+<br>
 
 **3. Run the app using Maven**
 
@@ -117,7 +146,6 @@ For Linux:
   mvn spring-boot:run
   ```
 The app will start running at <http://localhost:8080>
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -300,7 +328,7 @@ The app defines following CRUD APIs.
 - [x] Documentation(Swagger)
 - [ ] Unit Testing
 - [ ] Integration Testing
-- [ ] CI/CD and Docker
+- [ ] Improve deployment process with Docker and CI/CD pipelines
 
 See the [open issues](https://github.com/julian-pena/forum-rest-api/issues) for a full list of proposed features (and known issues).
 
@@ -361,3 +389,5 @@ Project Link: [https://github.com/julian-pena/forum-rest-api](https://github.com
 [Maven-url]: https://maven.apache.org/
 [Flyway.com]: https://img.shields.io/badge/Flyway-CC0200?logo=flyway&logoColor=fff&style=for-the-badge
 [Flyway-url]: https://www.red-gate.com/products/flyway/
+[Koyeb.com]: https://img.shields.io/badge/Koyeb-121212?logo=koyeb&logoColor=fff&style=flat
+[Koyeb-url]: https://www.red-gate.com/products/flyway/](https://www.koyeb.com/
