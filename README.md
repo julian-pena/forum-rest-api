@@ -69,7 +69,7 @@ Robust RESTful API for managing forum topics and responses. Secure and scalable 
 * [![MapStruct][MapStruct.com]][MapStruct-url]
 * [![Maven][Maven.com]][Maven-url]
 * [![Flyway][Flyway.com]][Flyway-url]
-* [![Koyeb][Koyeb.com]][Koyeb-url] 
+* [![Render][Render.com]][Render-url] 
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -155,7 +155,7 @@ This API uses Spring Security and JWT tokens to secure its endpoints. Below are 
 
 ### User Registration
 
-**Endpoint: POST /users**
+**Endpoint: POST /user**
 
 - This endpoint is open to the public.
 - A new user, along with their assigned role, can be created by sending a request to this endpoint.
@@ -263,7 +263,7 @@ The app defines following CRUD APIs.
 }
 ```
 
-##### <a id="newuser">Create userEntity -> /users</a>
+##### <a id="newuser">Register User-> /users</a>
 ```json
 {
   "name" : "Nimona flowers",
@@ -389,5 +389,5 @@ Project Link: [https://github.com/julian-pena/forum-rest-api](https://github.com
 [Maven-url]: https://maven.apache.org/
 [Flyway.com]: https://img.shields.io/badge/Flyway-CC0200?logo=flyway&logoColor=fff&style=for-the-badge
 [Flyway-url]: https://www.red-gate.com/products/flyway/
-[Koyeb.com]: https://img.shields.io/badge/Koyeb-121212?logo=koyeb&logoColor=fff&style=flat
-[Koyeb-url]: https://www.red-gate.com/products/flyway/](https://www.koyeb.com/
+[Render.com]: https://img.shields.io/badge/Render-000000?style=for-the-badge&logo=render&logoColor=white
+[Render-url]: https://render.com/
