@@ -75,8 +75,8 @@ Robust RESTful API for managing forum topics and responses. Secure and scalable 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Live Application
-Access the live version of the Forum REST API here: [Forum REST API](https://bewildered-layla-myprojects-julianp-98f1aebf.koyeb.app/). <br><br>
-This project is deployed on [Koyeb](https://www.koyeb.com) with PostgreSQL as the database. Environment variables are used to manage sensitive data like database credentials. You can access the live version through the link above.
+Access the live version of the Forum REST API here: [Forum REST API](https://forum-rest-api.onrender.com/). <br><br>
+This project is deployed on [Render](https://www.render.com) with PostgreSQL as the database. Environment variables are used to manage sensitive data like database credentials. You can access the live version through the link above. It might take a few minutes to load the application due to Render free tier restrictions for deployment. 
 
 
 <!-- GETTING STARTED -->
